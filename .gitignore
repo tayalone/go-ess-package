@@ -18,3 +18,5 @@ tmp
 main.go
 
 *.http
+
+exp/*
