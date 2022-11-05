@@ -1,6 +1,8 @@
 package gin
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/tayalone/go-ess-package/router"
 )
@@ -60,5 +62,11 @@ func (r *HTTPRouter) GET(path string, handlers ...func(router.Context)) {
 
 /*Start Http-Router*/
 func (r *HTTPRouter) Start() {
+	r.GET("/status", func(ctx router.Context) {
+		ctx.JSON(http.StatusOK, map[string]interface{}{
+			"message": "OK",
+		})
+	})
+
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
