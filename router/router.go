@@ -23,7 +23,7 @@ type RoterGrouper interface {
 /*Route is Behavior of Route Method In Application*/
 type Route interface {
 	Start()
-	Testing(method string, path string, body map[string]interface{}) (int, string)
-	Group(path string, handlers ...func(Context)) RoterGrouper
+	// Testing(method string, path string, body map[string]interface{}) (int, string)
+	// Group(path string, handlers ...func(Context)) RoterGrouper
 	Bahavior
 }
