@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/tayalone/go-ess-package/router"
+	"github.com/tayalone/go-ess-package/router/config"
 )
 
 /*MyContext is Overide "GIN" contexts*/
@@ -37,12 +38,15 @@ func NewRouterHandler(handler func(c router.Context)) gin.HandlerFunc {
 // HTTPRouter is Overided Gin Engine
 type HTTPRouter struct {
 	*gin.Engine
+	myRouterConfig config.Config
 }
 
 // NewHTTPRouter retun my engin
 func NewHTTPRouter() *HTTPRouter {
 	r := gin.Default()
-	return &HTTPRouter{r}
+	// c := router.
+	myRouterConfig := config.Read()
+	return &HTTPRouter{r, myRouterConfig}
 }
 
 func handlerConvertor(h []func(router.Context)) []gin.HandlerFunc {
