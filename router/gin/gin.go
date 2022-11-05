@@ -1,8 +1,11 @@
 package gin
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/http/httptest"
 
 	"github.com/gin-gonic/gin"
 	"github.com/tayalone/go-ess-package/router"
@@ -76,4 +79,16 @@ func (r *HTTPRouter) Start() {
 	port := fmt.Sprintf(":%d", r.config.Port)
 
 	r.Run(port) // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+}
+
+/*Testing make Gin Testing Call API and return result and statuscode*/
+func (r *HTTPRouter) Testing(method string, path string, body map[string]interface{}) (int, string) {
+	b := new(bytes.Buffer)
+	json.NewEncoder(b).Encode(body)
+
+	req, _ := http.NewRequest(method, path, b)
+	w := httptest.NewRecorder()
+	r.Engine.ServeHTTP(w, req)
+
+	return w.Code, w.Body.String()
 }
