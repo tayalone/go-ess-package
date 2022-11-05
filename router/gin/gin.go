@@ -47,9 +47,14 @@ type HTTPRouter struct {
 
 // NewHTTPRouter retun my engin
 func NewHTTPRouter() *HTTPRouter {
-	r := gin.Default()
-	// c := router.
 	config := config.Read()
+
+	if config.Mode != "DEBUG" {
+		gin.SetMode(gin.ReleaseMode)
+	}
+
+	r := gin.Default()
+
 	return &HTTPRouter{r, config}
 }
 

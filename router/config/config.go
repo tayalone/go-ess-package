@@ -11,6 +11,7 @@ import (
 /*Config is Data Structure for config HTTP Router*/
 type Config struct {
 	Port uint
+	Mode string
 }
 
 /*Read Config from env file */
@@ -19,13 +20,14 @@ func Read() Config {
 
 	env, err := godotenv.Read()
 	if err != nil {
-		log.Panicln(".env not found")
+		log.Println(".env not found")
 	}
 
 	fmt.Println("env", env)
 
 	c := Config{
 		Port: 3000,
+		Mode: "PRODUCTION",
 	}
 	// / Set Port ------------------------------------------------------
 	if env["ROUTER_PORT"] != "" {
@@ -34,6 +36,13 @@ func Read() Config {
 			c.Port = uint(u32)
 		}
 	}
-	// // ---------------------------------------------------------------
+	// / ---------------------------------------------------------------
+	// / Set Mode ------------------------------------------------------
+	if env["ROUTER_MODE"] == "DEBUG" {
+		c.Mode = "DEBUG"
+	}
+
+	// / ---------------------------------------------------------------
+
 	return c
 }
