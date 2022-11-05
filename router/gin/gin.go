@@ -1,6 +1,7 @@
 package gin
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -38,15 +39,15 @@ func NewRouterHandler(handler func(c router.Context)) gin.HandlerFunc {
 // HTTPRouter is Overided Gin Engine
 type HTTPRouter struct {
 	*gin.Engine
-	myRouterConfig config.Config
+	config config.Config
 }
 
 // NewHTTPRouter retun my engin
 func NewHTTPRouter() *HTTPRouter {
 	r := gin.Default()
 	// c := router.
-	myRouterConfig := config.Read()
-	return &HTTPRouter{r, myRouterConfig}
+	config := config.Read()
+	return &HTTPRouter{r, config}
 }
 
 func handlerConvertor(h []func(router.Context)) []gin.HandlerFunc {
@@ -72,5 +73,7 @@ func (r *HTTPRouter) Start() {
 		})
 	})
 
-	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	port := fmt.Sprintf(":%d", r.config.Port)
+
+	r.Run(port) // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
