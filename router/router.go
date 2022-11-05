@@ -9,10 +9,10 @@ type Context interface {
 /*Bahavior is Method Which Router must have*/
 type Bahavior interface {
 	GET(path string, handlers ...func(Context))
-	POST(path string, handlers ...func(Context))
-	PATCH(path string, handlers ...func(Context))
-	PUT(path string, handlers ...func(Context))
-	DELETE(path string, handlers ...func(Context))
+	// POST(path string, handlers ...func(Context))
+	// PATCH(path string, handlers ...func(Context))
+	// PUT(path string, handlers ...func(Context))
+	// DELETE(path string, handlers ...func(Context))
 }
 
 /*RoterGrouper is Method Which RoterGrouper must have*/
