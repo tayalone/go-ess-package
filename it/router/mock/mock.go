@@ -17,5 +17,29 @@ func MakeRoute(routeType string) router.Route {
 		})
 	})
 
+	myRouter.POST("/test-post", func(c router.Context) {
+		c.JSON(http.StatusOK, map[string]interface{}{
+			"message": "Test Route 'POST' OK!!",
+		})
+	})
+
+	myRouter.PATCH("/test-patch", func(c router.Context) {
+		c.JSON(http.StatusOK, map[string]interface{}{
+			"message": "Test Route 'PATCH' OK!!",
+		})
+	})
+
+	myRouter.PUT("/test-put", func(c router.Context) {
+		c.JSON(http.StatusOK, map[string]interface{}{
+			"message": "Test Route 'PUT' OK!!",
+		})
+	})
+
+	myRouter.DELETE("/test-delete", func(c router.Context) {
+		c.JSON(http.StatusOK, map[string]interface{}{
+			"message": "Test Route 'DELETE' OK!!",
+		})
+	})
+
 	return myRouter
 }

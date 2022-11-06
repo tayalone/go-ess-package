@@ -46,7 +46,7 @@ type HTTPRouter struct {
 }
 
 // NewHTTPRouter retun my engin
-func NewHTTPRouter() *HTTPRouter {
+func NewHTTPRouter() router.Route {
 	config := config.Read()
 
 	if config.Mode != "DEBUG" {
@@ -64,13 +64,6 @@ func handlerConvertor(h []func(router.Context)) []gin.HandlerFunc {
 		ginHandlers = append(ginHandlers, NewRouterHandler(handler))
 	}
 	return ginHandlers
-}
-
-/*GET is HTTP Method Get */
-func (r *HTTPRouter) GET(path string, handlers ...func(router.Context)) {
-	ginHandlers := handlerConvertor(handlers)
-
-	r.Engine.GET(path, ginHandlers...)
 }
 
 /*Start Http-Router*/
@@ -96,4 +89,34 @@ func (r *HTTPRouter) Testing(method string, path string, body map[string]interfa
 	r.Engine.ServeHTTP(w, req)
 
 	return w.Code, w.Body.String()
+}
+
+/*GET is HTTP Method Get */
+func (r *HTTPRouter) GET(path string, handlers ...func(router.Context)) {
+	ginHandlers := handlerConvertor(handlers)
+	r.Engine.GET(path, ginHandlers...)
+}
+
+/*POST is HTTP Method Post */
+func (r *HTTPRouter) POST(path string, handlers ...func(router.Context)) {
+	ginHandlers := handlerConvertor(handlers)
+	r.Engine.POST(path, ginHandlers...)
+}
+
+/*PATCH is HTTP Method Patch */
+func (r *HTTPRouter) PATCH(path string, handlers ...func(router.Context)) {
+	ginHandlers := handlerConvertor(handlers)
+	r.Engine.PATCH(path, ginHandlers...)
+}
+
+/*PUT is HTTP Method Put */
+func (r *HTTPRouter) PUT(path string, handlers ...func(router.Context)) {
+	ginHandlers := handlerConvertor(handlers)
+	r.Engine.PUT(path, ginHandlers...)
+}
+
+/*DELETE is HTTP Method Put */
+func (r *HTTPRouter) DELETE(path string, handlers ...func(router.Context)) {
+	ginHandlers := handlerConvertor(handlers)
+	r.Engine.DELETE(path, ginHandlers...)
 }
