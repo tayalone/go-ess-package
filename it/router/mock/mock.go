@@ -100,5 +100,11 @@ func MakeRoute(routeType string) router.Route {
 
 	}
 
+	myRouter.GET("/test-not-add-use", GetGlobalFromCtx)
+
+	myRouter.Use(UseGlobal)
+
+	myRouter.GET("/test-added-use", GetGlobalFromCtx)
+
 	return myRouter
 }

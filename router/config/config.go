@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"log"
 	"strconv"
 
@@ -22,8 +21,6 @@ func Read() Config {
 	if err != nil {
 		log.Println(".env not found")
 	}
-
-	fmt.Println("env", env)
 
 	c := Config{
 		Port: 3000,

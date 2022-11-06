@@ -27,6 +27,20 @@ func (mc *MyContext) JSON(statusCode int, v interface{}) {
 	mc.Context.JSON(statusCode, v)
 }
 
+/*Set is assingning key n' value to router ctx*/
+func (mc *MyContext) Set(key string, value interface{}) {
+	mc.Context.Set(key, value)
+}
+
+/*Get is assingning key n' value to router ctx*/
+func (mc *MyContext) Get(key string) (value interface{}, isExist bool) {
+	value, isExist = mc.Context.Get(key)
+	if !isExist {
+		return nil, false
+	}
+	return value, isExist
+}
+
 /*NewMyContext return MyContext whince overcomposition GIN Context*/
 func NewMyContext(c *gin.Context) *MyContext {
 	return &MyContext{Context: c}
@@ -121,6 +135,12 @@ func (r *HTTPRouter) DELETE(path string, handlers ...func(router.Context)) {
 	r.Engine.DELETE(path, ginHandlers...)
 }
 
+/*Use is inject Middleware To Http Router */
+func (r *HTTPRouter) Use(middleware func(router.Context)) {
+	// ginHandlers := handlerConvertor(middlewares)
+	r.Engine.Use(NewRouterHandler(middleware))
+}
+
 /*Group  Routing*/
 func (r *HTTPRouter) Group(path string, handlers ...func(router.Context)) router.RoterGrouper {
 	ginHandlers := handlerConvertor(handlers)
@@ -160,6 +180,11 @@ func (g HTTPRouterGroup) PUT(path string, handlers ...func(router.Context)) {
 func (g HTTPRouterGroup) DELETE(path string, handlers ...func(router.Context)) {
 	ginHandlers := handlerConvertor(handlers)
 	g.RouterGroup.DELETE(path, ginHandlers...)
+}
+
+/*Use is inject Middleware To Http Router */
+func (g HTTPRouterGroup) Use(middleware func(router.Context)) {
+	g.RouterGroup.Use(NewRouterHandler(middleware))
 }
 
 /*Group  Routing*/

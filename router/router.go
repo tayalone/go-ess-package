@@ -4,6 +4,8 @@ package router
 type Context interface {
 	Next()
 	JSON(int, interface{})
+	Set(string, interface{})
+	Get(string) (interface{}, bool)
 }
 
 /*Bahavior is Method Which Router must have*/
@@ -13,6 +15,7 @@ type Bahavior interface {
 	PATCH(path string, handlers ...func(Context))
 	PUT(path string, handlers ...func(Context))
 	DELETE(path string, handlers ...func(Context))
+	Use(middleware func(Context))
 }
 
 /*RoterGrouper is Method Which RoterGrouper must have*/
