@@ -34,10 +34,10 @@ func (suite *PatchTestSuite) BeforeTest(suiteName, testName string) {
 }
 
 func (suite *PatchTestSuite) runTest() {
-	statusCode, actual := suite.router.Testing(http.MethodPatch, "/test-patch", nil)
+	statusCode, actual := suite.router.Testing(http.MethodPatch, "/v1/sub/test-patch", nil)
 
 	wantMap := map[string]interface{}{
-		"message": "Test Route 'PATCH' OK!!",
+		"message": "Test Sub Route Grouper 'PATCH' OK!!",
 	}
 
 	want, _ := json.Marshal(wantMap)

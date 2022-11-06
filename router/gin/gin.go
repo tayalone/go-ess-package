@@ -161,3 +161,9 @@ func (g HTTPRouterGroup) DELETE(path string, handlers ...func(router.Context)) {
 	ginHandlers := handlerConvertor(handlers)
 	g.RouterGroup.DELETE(path, ginHandlers...)
 }
+
+/*Group  Routing*/
+func (g HTTPRouterGroup) Group(path string, handlers ...func(router.Context)) router.RoterGrouper {
+	ginHandlers := handlerConvertor(handlers)
+	return HTTPRouterGroup{RouterGroup: g.RouterGroup.Group(path, ginHandlers...)}
+}

@@ -17,6 +17,7 @@ type Bahavior interface {
 
 /*RoterGrouper is Method Which RoterGrouper must have*/
 type RoterGrouper interface {
+	Group(path string, handlers ...func(Context)) RoterGrouper
 	Bahavior
 }
 
