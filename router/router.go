@@ -24,6 +24,6 @@ type RoterGrouper interface {
 type Route interface {
 	Start()
 	Testing(method string, path string, body map[string]interface{}) (int, string)
-	// Group(path string, handlers ...func(Context)) RoterGrouper
+	Group(path string, handlers ...func(Context)) RoterGrouper
 	Bahavior
 }
