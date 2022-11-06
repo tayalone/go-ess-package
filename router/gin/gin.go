@@ -156,7 +156,7 @@ func (g HTTPRouterGroup) PUT(path string, handlers ...func(router.Context)) {
 	g.RouterGroup.PUT(path, ginHandlers...)
 }
 
-/*PUT is Router Grouper HTTP Method Get */
+/*DELETE is Router Grouper HTTP Method Get */
 func (g HTTPRouterGroup) DELETE(path string, handlers ...func(router.Context)) {
 	ginHandlers := handlerConvertor(handlers)
 	g.RouterGroup.DELETE(path, ginHandlers...)

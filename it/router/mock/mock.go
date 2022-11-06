@@ -41,5 +41,35 @@ func MakeRoute(routeType string) router.Route {
 		})
 	})
 
+	v1 := myRouter.Group("/v1")
+	{
+		v1.GET("/test-get", func(c router.Context) {
+			c.JSON(http.StatusOK, map[string]interface{}{
+				"message": "Test Route Grouper 'GET' OK!!",
+			})
+		})
+		v1.POST("/test-post", func(c router.Context) {
+			c.JSON(http.StatusOK, map[string]interface{}{
+				"message": "Test Route Grouper 'POST' OK!!",
+			})
+		})
+		v1.PATCH("/test-patch", func(c router.Context) {
+			c.JSON(http.StatusOK, map[string]interface{}{
+				"message": "Test Route Grouper 'PATCH' OK!!",
+			})
+		})
+		v1.PUT("/test-put", func(c router.Context) {
+			c.JSON(http.StatusOK, map[string]interface{}{
+				"message": "Test Route Grouper 'PUT' OK!!",
+			})
+		})
+		v1.DELETE("/test-delete", func(c router.Context) {
+			c.JSON(http.StatusOK, map[string]interface{}{
+				"message": "Test Route Grouper 'DELETE' OK!!",
+			})
+		})
+
+	}
+
 	return myRouter
 }
