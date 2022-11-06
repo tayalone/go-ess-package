@@ -1,4 +1,4 @@
-package get
+package method
 
 import (
 	"encoding/json"
@@ -34,10 +34,10 @@ func (suite *GetTestSuite) BeforeTest(suiteName, testName string) {
 }
 
 func (suite *GetTestSuite) runTest() {
-	statusCode, actual := suite.router.Testing(http.MethodGet, "/v1/test-get", nil)
+	statusCode, actual := suite.router.Testing(http.MethodGet, "/test-get", nil)
 
 	wantMap := map[string]interface{}{
-		"message": "Test Route Grouper 'GET' OK!!",
+		"message": "Test Route 'GET' OK!!",
 	}
 
 	want, _ := json.Marshal(wantMap)

@@ -1,4 +1,4 @@
-package delete
+package group
 
 import (
 	"encoding/json"
@@ -10,18 +10,18 @@ import (
 	"github.com/tayalone/go-ess-package/router"
 )
 
-type DeleteTestSuite struct {
+type PostTestSuite struct {
 	suite.Suite
 	router router.Route
 }
 
 /*SetupSuite init setup for Router*/
-func (suite *DeleteTestSuite) SetupSuite() {
+func (suite *PostTestSuite) SetupSuite() {
 	/* Do Not Thing */
 }
 
 // BeforeTest run before each test
-func (suite *DeleteTestSuite) BeforeTest(suiteName, testName string) {
+func (suite *PostTestSuite) BeforeTest(suiteName, testName string) {
 	var routeType string
 
 	switch testName {
@@ -33,11 +33,11 @@ func (suite *DeleteTestSuite) BeforeTest(suiteName, testName string) {
 	suite.router = mock.MakeRoute(routeType)
 }
 
-func (suite *DeleteTestSuite) runTest() {
-	statusCode, actual := suite.router.Testing(http.MethodDelete, "/test-delete", nil)
+func (suite *PostTestSuite) runTest() {
+	statusCode, actual := suite.router.Testing(http.MethodPost, "/v1/test-post", nil)
 
 	wantMap := map[string]interface{}{
-		"message": "Test Route 'DELETE' OK!!",
+		"message": "Test Route Grouper 'POST' OK!!",
 	}
 
 	want, _ := json.Marshal(wantMap)
@@ -46,11 +46,11 @@ func (suite *DeleteTestSuite) runTest() {
 	suite.JSONEq(string(want), actual)
 }
 
-func (suite *DeleteTestSuite) TestGin() {
+func (suite *PostTestSuite) TestGin() {
 	suite.runTest()
 }
 
 /*TestGinRouteSuite is trigger run it test*/
-func TestRouteDeleteSuite(t *testing.T) {
-	suite.Run(t, new(DeleteTestSuite))
+func TestRoutePostSuite(t *testing.T) {
+	suite.Run(t, new(PostTestSuite))
 }

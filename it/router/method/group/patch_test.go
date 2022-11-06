@@ -1,4 +1,4 @@
-package post
+package group
 
 import (
 	"encoding/json"
@@ -10,18 +10,18 @@ import (
 	"github.com/tayalone/go-ess-package/router"
 )
 
-type PostTestSuite struct {
+type PatchTestSuite struct {
 	suite.Suite
 	router router.Route
 }
 
 /*SetupSuite init setup for Router*/
-func (suite *PostTestSuite) SetupSuite() {
+func (suite *PatchTestSuite) SetupSuite() {
 	/* Do Not Thing */
 }
 
 // BeforeTest run before each test
-func (suite *PostTestSuite) BeforeTest(suiteName, testName string) {
+func (suite *PatchTestSuite) BeforeTest(suiteName, testName string) {
 	var routeType string
 
 	switch testName {
@@ -33,11 +33,11 @@ func (suite *PostTestSuite) BeforeTest(suiteName, testName string) {
 	suite.router = mock.MakeRoute(routeType)
 }
 
-func (suite *PostTestSuite) runTest() {
-	statusCode, actual := suite.router.Testing(http.MethodPost, "/v1/sub/test-post", nil)
+func (suite *PatchTestSuite) runTest() {
+	statusCode, actual := suite.router.Testing(http.MethodPatch, "/test-patch", nil)
 
 	wantMap := map[string]interface{}{
-		"message": "Test Sub Route Grouper 'POST' OK!!",
+		"message": "Test Route 'PATCH' OK!!",
 	}
 
 	want, _ := json.Marshal(wantMap)
@@ -46,11 +46,11 @@ func (suite *PostTestSuite) runTest() {
 	suite.JSONEq(string(want), actual)
 }
 
-func (suite *PostTestSuite) TestGin() {
+func (suite *PatchTestSuite) TestGin() {
 	suite.runTest()
 }
 
 /*TestGinRouteSuite is trigger run it test*/
-func TestRoutePostSuite(t *testing.T) {
-	suite.Run(t, new(PostTestSuite))
+func TestRoutePatchSuite(t *testing.T) {
+	suite.Run(t, new(PatchTestSuite))
 }

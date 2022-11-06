@@ -70,6 +70,12 @@ func MakeRoute(routeType string) router.Route {
 					"message": "Test Sub Route Grouper 'DELETE' OK!!",
 				})
 			})
+			sub.GET("/test-not-add-use", GetSubGroupUselFromCtx)
+
+			sub.Use(UseSubGroupV1)
+
+			sub.GET("/test-added-use", GetSubGroupUselFromCtx)
+
 		}
 
 		v1.GET("/test-get", func(c router.Context) {
@@ -97,6 +103,11 @@ func MakeRoute(routeType string) router.Route {
 				"message": "Test Route Grouper 'DELETE' OK!!",
 			})
 		})
+		v1.GET("/test-not-add-use", GetGroupUselFromCtx)
+
+		v1.Use(UseGroupV1)
+
+		v1.GET("/test-added-use", GetGroupUselFromCtx)
 
 	}
 

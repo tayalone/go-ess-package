@@ -1,4 +1,4 @@
-package post
+package sub
 
 import (
 	"encoding/json"
@@ -34,10 +34,10 @@ func (suite *PostTestSuite) BeforeTest(suiteName, testName string) {
 }
 
 func (suite *PostTestSuite) runTest() {
-	statusCode, actual := suite.router.Testing(http.MethodPost, "/v1/test-post", nil)
+	statusCode, actual := suite.router.Testing(http.MethodPost, "/v1/sub/test-post", nil)
 
 	wantMap := map[string]interface{}{
-		"message": "Test Route Grouper 'POST' OK!!",
+		"message": "Test Sub Route Grouper 'POST' OK!!",
 	}
 
 	want, _ := json.Marshal(wantMap)
