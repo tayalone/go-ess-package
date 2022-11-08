@@ -70,7 +70,7 @@ func NewHTTPRouter() router.Route {
 	r := gin.Default()
 	r.NoRoute(func(ctx *gin.Context) {
 		ctx.JSON(http.StatusNotFound, gin.H{
-			"status": "Not Found",
+			"message": "Not Found",
 		})
 	})
 
