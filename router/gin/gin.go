@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/tayalone/go-ess-package/router"
 	"github.com/tayalone/go-ess-package/router/config"
+	rotuerConfig "github.com/tayalone/go-ess-package/router/config"
 )
 
 /*MyContext is Overide "GIN" contexts*/
@@ -61,7 +62,7 @@ type HTTPRouter struct {
 
 // NewHTTPRouter retun my engin
 func NewHTTPRouter() router.Route {
-	config := config.Read()
+	config := rotuerConfig.Read()
 
 	if config.Mode != "DEBUG" {
 		gin.SetMode(gin.ReleaseMode)
@@ -70,7 +71,7 @@ func NewHTTPRouter() router.Route {
 	r := gin.Default()
 	r.NoRoute(func(ctx *gin.Context) {
 		ctx.JSON(http.StatusNotFound, gin.H{
-			"message": "Not Found",
+			"message": rotuerConfig.RespMsg["NOT_FOUND"],
 		})
 	})
 

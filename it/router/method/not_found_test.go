@@ -8,6 +8,7 @@ import (
 	"github.com/stretchr/testify/suite"
 	"github.com/tayalone/go-ess-package/it/router/mock"
 	"github.com/tayalone/go-ess-package/router"
+	rotuerConfig "github.com/tayalone/go-ess-package/router/config"
 )
 
 type NotFoundTestSuite struct {
@@ -37,7 +38,7 @@ func (suite *NotFoundTestSuite) runTest() {
 	statusCode, actual := suite.router.Testing(http.MethodGet, "/test-get", nil)
 
 	wantMap := map[string]interface{}{
-		"message": "Not Found",
+		"message": rotuerConfig.RespMsg["NOT_FOUND"],
 	}
 
 	want, _ := json.Marshal(wantMap)
