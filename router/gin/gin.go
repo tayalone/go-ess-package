@@ -33,6 +33,11 @@ func (mc *MyContext) Set(key string, value interface{}) {
 	mc.Context.Set(key, value)
 }
 
+/*BindURI must retun erro when query params invalidate*/
+func (mc *MyContext) BindURI(i interface{}) error {
+	return mc.Context.ShouldBindUri(i)
+}
+
 /*Get is assingning key n' value to router ctx*/
 func (mc *MyContext) Get(key string) (value interface{}, isExist bool) {
 	value, isExist = mc.Context.Get(key)

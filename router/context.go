@@ -6,4 +6,5 @@ type Context interface {
 	JSON(int, interface{})
 	Set(string, interface{})
 	Get(string) (interface{}, bool)
+	BindURI(interface{}) error
 }
