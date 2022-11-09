@@ -1,0 +1,4 @@
+package convertor
+
+func ErrorValidate() {
+}
