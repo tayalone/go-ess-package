@@ -43,3 +43,8 @@ func Read() Config {
 
 	return c
 }
+
+/*RespMsg is Map of Default resp msg in app*/
+var RespMsg = map[string]string{
+	"NOT_FOUND": "Not Found",
+}
