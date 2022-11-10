@@ -35,7 +35,9 @@ func (mc *MyContext) Set(key string, value interface{}) {
 
 /*BindURI must retun erro when query params invalidate*/
 func (mc *MyContext) BindURI(i interface{}) error {
-	return mc.Context.ShouldBindUri(i)
+	err := mc.Context.ShouldBindUri(i)
+
+	return err
 }
 
 /*Get is assingning key n' value to router ctx*/
