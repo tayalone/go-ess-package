@@ -11,6 +11,7 @@ import (
 	"github.com/tayalone/go-ess-package/router"
 	"github.com/tayalone/go-ess-package/router/config"
 	rotuerConfig "github.com/tayalone/go-ess-package/router/config"
+	"github.com/tayalone/go-ess-package/router/response"
 )
 
 /*MyContext is Overide "GIN" contexts*/
@@ -34,10 +35,13 @@ func (mc *MyContext) Set(key string, value interface{}) {
 }
 
 /*BindURI must retun erro when query params invalidate*/
-func (mc *MyContext) BindURI(i interface{}) error {
+func (mc *MyContext) BindURI(i interface{}) (response.BadReqResponse, error) {
 	err := mc.Context.ShouldBindUri(i)
-
-	return err
+	if err != nil {
+		resp, _ := response.GenBadReqRes(err, "params")
+		return resp, err
+	}
+	return response.BadReqResponse{}, nil
 }
 
 /*Get is assingning key n' value to router ctx*/
