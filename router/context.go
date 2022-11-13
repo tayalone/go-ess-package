@@ -8,5 +8,9 @@ type Context interface {
 	JSON(int, interface{})
 	Set(string, interface{})
 	Get(string) (interface{}, bool)
-	BindURI(interface{}) (response.BadReqResponse, error)
+	// BindURI(interface{}) (response.BadReqResponse, error)
+	GetHeader(string) (string, bool)
+	SetHeader(string, string)
+	BindJSON(interface{}) (response.BadReqResponse, error)
+	BindFormData(interface{}) (response.BadReqResponse, error)
 }

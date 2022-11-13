@@ -1,6 +1,8 @@
 package gin
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"github.com/tayalone/go-ess-package/router/response"
 )
@@ -42,6 +44,39 @@ func (mc *MyContext) Get(key string) (value interface{}, isExist bool) {
 		return nil, false
 	}
 	return value, isExist
+}
+
+/*GetHeader by Key*/
+func (mc *MyContext) GetHeader(key string) (string, bool) {
+	h := mc.Context.GetHeader(key)
+	fmt.Println("GetHeader", key, h)
+	return h, h != ""
+}
+
+/*SetHeader by Key*/
+func (mc *MyContext) SetHeader(key string, value string) {
+	fmt.Println("SetHeader", key, value)
+	mc.Context.Writer.Header().Set(key, value)
+}
+
+/*BindJSON must retun erro when query params invalidate*/
+func (mc *MyContext) BindJSON(i interface{}) (response.BadReqResponse, error) {
+	err := mc.Context.ShouldBindJSON(i)
+	if err != nil {
+		resp, _ := response.GenBadReqRes(err, "body")
+		return resp, err
+	}
+	return response.BadReqResponse{}, nil
+}
+
+/*BindFormData must retun erro when query params invalidate*/
+func (mc *MyContext) BindFormData(i interface{}) (response.BadReqResponse, error) {
+	err := mc.Context.ShouldBind(i)
+	if err != nil {
+		resp, _ := response.GenBadReqRes(err, "form-data")
+		return resp, err
+	}
+	return response.BadReqResponse{}, nil
 }
 
 /*NewMyContext return MyContext whince overcomposition GIN Context*/

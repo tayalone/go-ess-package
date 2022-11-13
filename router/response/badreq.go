@@ -23,7 +23,10 @@ type BadReqPayload struct {
 func GenBadReqRes(err error, p string) (BadReqResponse, error) {
 	details, errDetail := convertor.ErrorValidate(err)
 	if errDetail != nil {
-		return BadReqResponse{}, errDetail
+		return BadReqResponse{StatusCode: http.StatusBadRequest, Payload: map[string]interface{}{
+			"Message":   "Validation Failed - Empty Payload",
+			"Parameter": p,
+		}}, errDetail
 	}
 	brp := BadReqPayload{
 		Message:   "Validation Failed",
