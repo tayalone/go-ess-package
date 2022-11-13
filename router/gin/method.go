@@ -39,7 +39,37 @@ func NewHTTPRouter() router.Route {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	r := gin.Default()
+	r := gin.New()
+
+	r.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
+		// param.ClientIP,
+		// param.TimeStamp.Format(time.RFC1123),
+		// param.Method,
+		// param.Path,
+		// param.Request.Proto,
+		// param.StatusCode,
+		// param.Latency,
+		// param.Request.UserAgent(),
+		// param.ErrorMessage,
+
+		return fmt.Sprintf("[GIN] %v |%3d| %13v | %15s |%-7s %#v\n%s",
+			param.TimeStamp.Format("2006/01/02 - 15:04:05"),
+			param.StatusCode,
+			param.Latency,
+			param.ClientIP,
+			param.Method,
+			param.Path,
+			param.ErrorMessage,
+		)
+	}))
+
+	r.Use(gin.CustomRecovery(func(c *gin.Context, recovered interface{}) {
+		if err, ok := recovered.(string); ok {
+			c.String(http.StatusInternalServerError, fmt.Sprintf("error: %s", err))
+		}
+		c.AbortWithStatus(http.StatusInternalServerError)
+	}))
+
 	r.NoRoute(func(ctx *gin.Context) {
 		ctx.JSON(http.StatusNotFound, gin.H{
 			"message": rotuerConfig.RespMsg["NOT_FOUND"],
@@ -96,8 +126,6 @@ func (r *HTTPRouter) Start() {
 	if err := s.Shutdown(timeoutCtx); err != nil {
 		fmt.Println(err)
 	}
-
-	// r.Run(port) // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
 
 /*Testing make Gin Testing Call API and return result and statuscode*/
