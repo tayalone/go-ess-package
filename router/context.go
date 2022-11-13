@@ -10,6 +10,7 @@ type Context interface {
 	Get(string) (interface{}, bool)
 	// BindURI(interface{}) (response.BadReqResponse, error)
 	GetHeader(string) (string, bool)
+	GetQuery(string) string
 	SetHeader(string, string)
 	BindJSON(interface{}) (response.BadReqResponse, error)
 	BindFormData(interface{}) (response.BadReqResponse, error)

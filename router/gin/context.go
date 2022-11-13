@@ -59,6 +59,11 @@ func (mc *MyContext) SetHeader(key string, value string) {
 	mc.Context.Writer.Header().Set(key, value)
 }
 
+/*GetQuery by name*/
+func (mc *MyContext) GetQuery(key string) string {
+	return mc.Context.Query(key)
+}
+
 /*BindJSON must retun erro when query params invalidate*/
 func (mc *MyContext) BindJSON(i interface{}) (response.BadReqResponse, error) {
 	err := mc.Context.ShouldBindJSON(i)
