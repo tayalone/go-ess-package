@@ -2,6 +2,7 @@ package gin
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/tayalone/go-ess-package/router/response"
@@ -82,6 +83,11 @@ func (mc *MyContext) BindFormData(i interface{}) (response.BadReqResponse, error
 		return resp, err
 	}
 	return response.BadReqResponse{}, nil
+}
+
+/*GetHTTPRequest .... */
+func (mc *MyContext) GetHTTPRequest() *http.Request {
+	return mc.Context.Request
 }
 
 /*NewMyContext return MyContext whince overcomposition GIN Context*/

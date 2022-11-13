@@ -2,10 +2,15 @@ package gin
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"net/http/httptest"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/tayalone/go-ess-package/router"
@@ -62,7 +67,37 @@ func (r *HTTPRouter) Start() {
 
 	port := fmt.Sprintf(":%d", r.config.Port)
 
-	r.Run(port) // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	defer stop()
+
+	s := &http.Server{
+		Addr:           port,
+		Handler:        r,
+		ReadTimeout:    r.config.ReadTimeOutSec,
+		WriteTimeout:   r.config.WriteTimeOutSec,
+		IdleTimeout:    r.config.IdealTimeOutSec,
+		MaxHeaderBytes: r.config.MaxHeadBytes,
+	}
+
+	go func() {
+		if err := s.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("listen :%s\n", err)
+		}
+	}()
+	log.Println("App Running @port", r.config.Port)
+
+	<-ctx.Done()
+	stop()
+	fmt.Println("shutting down gracefully, press Ctrl+C again to force")
+
+	timeoutCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if err := s.Shutdown(timeoutCtx); err != nil {
+		fmt.Println(err)
+	}
+
+	// r.Run(port) // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
 
 /*Testing make Gin Testing Call API and return result and statuscode*/
