@@ -21,7 +21,7 @@ func JaegertracerProvider(url, serviceName, envName string) (*tracesdk.TracerPro
 		// Record information about this application in a Resource.
 		tracesdk.WithResource(resource.NewWithAttributes(
 			semconv.SchemaURL,
-			semconv.ServiceNameKey.String(envName),
+			semconv.ServiceNameKey.String(serviceName),
 			attribute.String("environment", envName),
 			/* can add other attribure
 			attribute.Int64("ID", id),
